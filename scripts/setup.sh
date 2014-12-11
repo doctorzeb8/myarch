@@ -38,7 +38,7 @@ pacman -S openssh --noconfirm
 useradd -m -s /bin/bash $USERNAME
 sed -i "s/$USERNAME:[^:]*:/$USERNAME::/" /etc/shadow
 su $USERNAME -c 'cat /dev/zero | ssh-keygen -t rsa -N ""'
-username=$USERNAME nopasswd=/usr/bin/systemctl,/usr/bin/pacman,/usr/bin/netctl /myarch/scripts/myvisudo
+username=$USERNAME nopasswd=/usr/bin/systemctl,/usr/bin/pacman,/usr/bin/netctl /myarch/scripts/myvisudo.sh
 cp /myarch/config/bashrc /root/.bashrc
 cp /myarch/config/bashrc /home/$USERNAME/.bashrc
 sed -i '$ a alsi' /home/$USERNAME/.bashrc
@@ -74,12 +74,9 @@ sed -i "$ a default_user $USERNAME" /etc/slim.conf
 sed -i "$ a auto_login yes" /etc/slim.conf
 
 #- soft -#
-su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev'
-
-#- git -#
-git config --global user.email "doctorzeb8@gmail.com"
-git config --global user.name "Denis Savasteev"
+su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev --noconfirm'
 
 #- finish -#
+su $USERNAME -c '/myarch/scripts/customize.sh'
 passwd
 exit
