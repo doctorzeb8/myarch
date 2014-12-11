@@ -9,10 +9,9 @@ systemctl enable haveged
 rm -rf /etc/pacman.d/gnupg
 pacman-key --init
 pacman-key --populate archlinux
-
-#- yaourt -#
+sed -i '$ a \\n[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
 sed -i '$ a \\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /etc/pacman.conf
-pacman -Syu yaourt --noconfirm
+pacman -Syu multilib-devel yaourt --noconfirm
 
 #- host -#
 echo $HOSTNAME > /etc/hostname
@@ -36,7 +35,6 @@ grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 #- user -#
-passwd
 pacman -S openssh --noconfirm
 useradd -m -s /bin/bash $USERNAME
 sed -i "s/$USERNAME:[^:]*:/$USERNAME::/" /etc/shadow
@@ -72,15 +70,17 @@ pacman -S alsa-utils alsa-plugins --noconfirm
 sudo pacman -S slim xfce4 --noconfirm
 cp /etc/skel/.xinitrc /home/$USERNAME/.xinitrc
 sed -i 's/# exec startxfce4/exec startxfce4/' /home/$USERNAME/.xinitrc
-sudo systemctl enable slim.service
+systemctl enable slim.service
 sed -i "$ a default_user $USERNAME" /etc/slim.conf
 sed -i "$ a auto_login yes" /etc/slim.conf
 
 #- soft -#
-su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev steam'
+su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev'
 
 #- git -#
 git config --global user.email "doctorzeb8@gmail.com"
 git config --global user.name "Denis Savasteev"
 
+#- finish -#
+passwd
 exit
