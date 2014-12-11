@@ -2,7 +2,6 @@ source /myarch/config/variables
 
 #- pacman -#
 cp /myarch/config/mirrorlist /etc/pacman.d/mirrorlist
-
 pacman -Syu haveged --noconfirm
 systemctl start haveged
 systemctl enable haveged
@@ -11,7 +10,7 @@ pacman-key --init
 pacman-key --populate archlinux
 sed -i '$ a \\n[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
 sed -i '$ a \\n[archlinuxfr]\nServer = http://repo.archlinux.fr/$arch\nSigLevel = Never' /etc/pacman.conf
-pacman -Syu multilib-devel yaourt --noconfirm
+pacman -Syyu yaourt --noconfirm
 
 #- host -#
 echo $HOSTNAME > /etc/hostname
@@ -57,7 +56,7 @@ else
 fi
 
 #- utils -#
-pacman -S alsi gvfs polkit-gnome ntfs-3g p7zip unrar --noconfirm
+pacman -S git alsi gvfs polkit-gnome ntfs-3g p7zip unrar --noconfirm
 pacman -S ttf-droid ttf-liberation ttf-dejavu ttf-ubuntu-font-family --noconfirm
 
 #- video -#
