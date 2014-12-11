@@ -4,8 +4,8 @@ Arch Linux installer
 
 ### Usage
 ```
-bash
-pacman -S git
+#!/bin/bash
+pacman -Sy git
 git clone https://github.com/doctorzeb8/myarch.git /myarch
 cd /myarch
 
