@@ -1,17 +1,30 @@
-dd if=/dev/zero of=/dev/sda count=2048
+prompt() {
+    echo "Run $1?"
+    select resp in "y" "n"; do
+        case $resp in
+            y ) $2; break;;
+            n ) exit;;
+        esac
+    done
+}
+
+
+prompt 'blackhole' '
+dd if=/dev/zero of=/dev/sda count=2048'
+
+prompt 'space dividing' '
 cfdisk
-
-mkfs.ext2 /dev/sda1
-mkfs.ext4 /dev/sda5
-mkfs.ext4 /dev/sda6
-
+mkswap /dev/sda2
 e2label /dev/sda1 boot
 e2label /dev/sda5 root
-e2label /dev/sda6 home
+e2label /dev/sda6 home'
 
-mkswap /dev/sda2
+prompt 'format partiotions' '
+mkfs.ext2 /dev/sda1
+mkfs.ext4 /dev/sda5
+mkfs.ext4 /dev/sda6'
+
 swapon /dev/sda2
-
 mount /dev/sda5 /mnt
 mkdir /mnt/boot
 mkdir /mnt/home
