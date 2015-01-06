@@ -23,9 +23,8 @@ locale-gen
 
 #- time -#
 ln -s /usr/share/zoneinfo/Asia/Irkutsk /etc/localtime
-# pacman -S ntp
-# systemctl enable ntpd.service
-# hwclock --systohc --utc
+pacman -S ntp
+systemctl enable ntpd.service
 
 #- grub -#
 pacman -S grub --noconfirm
