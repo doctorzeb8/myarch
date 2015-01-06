@@ -11,3 +11,14 @@ cd /myarch
 nano config/variables
 scripts/install.sh
 ```
+
+### Roadmap
+* cfdisk -> sfdisk
+* xfce4
+* sublime
+* pulseaudio
+* flash
+* transmission
+* steam
+* bitwig
+* iso
