@@ -1,5 +1,9 @@
 source /myarch/config/variables
 
+pacset() {
+    pacman -S $1 --noconfirm
+}
+
 #- pacman -#
 cp /myarch/config/mirrorlist /etc/pacman.d/mirrorlist
 pacman -Syu haveged --noconfirm
@@ -23,17 +27,17 @@ locale-gen
 
 #- time -#
 ln -s /usr/share/zoneinfo/Asia/Irkutsk /etc/localtime
-pacman -S ntp
+pacset ntp
 systemctl enable ntpd.service
 
 #- grub -#
-pacman -S grub --noconfirm
+pacset grub
 sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/' /etc/default/grub
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 #- user -#
-pacman -S openssh --noconfirm
+pacset openssh
 useradd -m -s /bin/bash $USERNAME
 sed -i "s/$USERNAME:[^:]*:/$USERNAME::/" /etc/shadow
 su $USERNAME -c 'cat /dev/zero | ssh-keygen -t rsa -N ""'
@@ -43,29 +47,29 @@ cp /myarch/config/bashrc /home/$USERNAME/.bashrc
 sed -i '$ a alsi' /home/$USERNAME/.bashrc
 
 #- xorg -#
-pacman -S xorg-server xorg-server-utils xorg-xinit xorg-xprop --noconfirm
+pacset xorg-server xorg-server-utils xorg-xinit xorg-xprop
 
 #- net -#
 if [ $HOSTNAME == 'arch-laptop' ]
 then
-	pacman -S wireless_tools wpa_supplicant wpa_actiond dialog xf86-input-synaptics --noconfirm
-	systemctl enable netctl-auto@wlan0.service
+    pacset wireless_tools wpa_supplicant wpa_actiond dialog xf86-input-synaptics
+    systemctl enable netctl-auto@wlan0.service
 else
-	systemctl enable dhcpcd.service
+    systemctl enable dhcpcd.service
 fi
 
 #- utils -#
-pacman -S git alsi gvfs polkit-gnome ntfs-3g p7zip unrar --noconfirm
-pacman -S ttf-droid ttf-liberation ttf-dejavu ttf-ubuntu-font-family --noconfirm
+pacset git alsi gvfs polkit-gnome ntfs-3g p7zip unrar
+pacset ttf-droid ttf-liberation ttf-dejavu ttf-ubuntu-font-family
 
 #- video -#
-pacman -S xf86-video-ati --noconfirm
+pacset xf86-video-ati
 
 #- sound -#
-pacman -S alsa-utils alsa-plugins --noconfirm
+pacset alsa-utils alsa-plugins
 
 #- xfce -#
-sudo pacman -S wget slim xfce4 xfce4-xkb-plugin file-roller --noconfirm
+pacset wget slim xfce4 xfce4-xkb-plugin file-roller
 cp /etc/skel/.xinitrc /home/$USERNAME/.xinitrc
 sed -i 's/# exec startxfce4/exec startxfce4/' /home/$USERNAME/.xinitrc
 systemctl enable slim.service
@@ -73,7 +77,12 @@ sed -i "$ a default_user $USERNAME" /etc/slim.conf
 sed -i "$ a auto_login yes" /etc/slim.conf
 
 #- packages -#
-su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev skype python2-virtualev --noconfirm'
+su $USERNAME -c 'yaourt -S
+google-chrome
+sublime-text-dev
+skype
+python2-virtualev
+--noconfirm'
 
 #- git -#
 git config --global user.email $user_email
