@@ -22,6 +22,7 @@ sed -i "s/localhost.localdomain/$HOSTNAME/g" /etc/hosts
 
 #- locale -#
 sed -i 's/#en_US/en_US/' /etc/locale.gen
+sed -i 's/#ru_RU/ru_RU/' /etc/locale.gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 locale-gen
 
