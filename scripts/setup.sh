@@ -76,6 +76,7 @@ sed -i 's/# exec startxfce4/exec startxfce4/' /home/$USERNAME/.xinitrc
 systemctl enable slim.service
 sed -i "$ a default_user $USERNAME" /etc/slim.conf
 sed -i "$ a auto_login yes" /etc/slim.conf
+sed -i 's/# numlock/numlock/' /etc/slim.conf
 
 #- packages -#
 su $USERNAME -c 'yaourt -S
