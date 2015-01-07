@@ -1,2 +1,4 @@
-HOSTNAME='arch-desktop'
-USERNAME='doctor'
+hostname = 'arch-desktop'
+user_nickname='doctor'
+user_fullname='Denis Savasteev'
+user_email='doctorzeb8@gmail.com'

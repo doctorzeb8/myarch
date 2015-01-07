@@ -76,7 +76,11 @@ sed -i "$ a auto_login yes" /etc/slim.conf
 #- soft -#
 su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev --noconfirm'
 
+#- git -#
+git config --global user.email $user_email
+git config --global user.name $user_fullname
+git config --global push.default simple
+
 #- finish -#
-su $USERNAME -c '/myarch/scripts/customize.sh'
 passwd
 exit
