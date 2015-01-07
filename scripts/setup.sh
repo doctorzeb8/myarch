@@ -66,15 +66,15 @@ pacman -S xf86-video-ati --noconfirm
 pacman -S alsa-utils alsa-plugins --noconfirm
 
 #- xfce -#
-sudo pacman -S slim xfce4 --noconfirm
+sudo pacman -S wget slim xfce4 xfce4-xkb-plugin file-roller --noconfirm
 cp /etc/skel/.xinitrc /home/$USERNAME/.xinitrc
 sed -i 's/# exec startxfce4/exec startxfce4/' /home/$USERNAME/.xinitrc
 systemctl enable slim.service
 sed -i "$ a default_user $USERNAME" /etc/slim.conf
 sed -i "$ a auto_login yes" /etc/slim.conf
 
-#- soft -#
-su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev --noconfirm'
+#- packages -#
+su $USERNAME -c 'yaourt -S google-chrome sublime-text-dev skype python2-virtualev --noconfirm'
 
 #- git -#
 git config --global user.email $user_email
